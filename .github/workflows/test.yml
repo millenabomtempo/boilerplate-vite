@@ -20,6 +20,9 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
 
+      - name: Install pnpm
+        run: npm install -g pnpm  # Passo para instalar o pnpm
+
       - name: Install dependencies
         run: pnpm install
 
@@ -27,7 +30,7 @@ jobs:
         run: pnpm run lint
 
       - name: Run Prettier Check
-        run: pnpm run format:check
+        run: pnpm run prettier
 
       - name: Run Tests with Coverage
         run: pnpm run test:coverage
