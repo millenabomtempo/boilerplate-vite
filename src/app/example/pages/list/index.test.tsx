@@ -1,0 +1,24 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { render } from '@testing-library/react'
+import { lazy } from 'react'
+import { describe, expect, it } from 'vitest'
+
+const List = lazy(() => import('./index'))
+
+const renderComponent = (queryClient: QueryClient) => {
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <List />
+    </QueryClientProvider>,
+  )
+}
+
+describe('<List  />', () => {
+  it('should render page', () => {
+    const queryClient = new QueryClient()
+
+    const component = renderComponent(queryClient)
+
+    expect(component).toBeTruthy()
+  })
+})

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"],
+      "@shared/*": ["shared/*"],
+      "@components/*": ["shared/components/*"],
+      "@mocks/*": ["mocks/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

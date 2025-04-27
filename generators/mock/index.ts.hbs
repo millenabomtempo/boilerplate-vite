@@ -1,0 +1,14 @@
+import { HttpResponse, http } from 'msw' 
+
+import { getURL } from '@mocks/helpers/baseURL' 
+import { ENDPOINTS } from '@shared/services/endpoints'
+
+import { {{constantCase ModuleName}}_MOCK } from './mock' 
+
+const MOCK = {{constantCase ModuleName}}_MOCK 
+
+export const {{camelCase ModuleName}}Handlers = [ 
+	http.get(getURL(ENDPOINTS.home), () => {
+		return HttpResponse.json(MOCK, { status: 200 }) 
+	}) 
+]

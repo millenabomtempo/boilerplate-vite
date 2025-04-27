@@ -1,0 +1,41 @@
+name: Run Lint, Format, Tests and Upload Coverage
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-format-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run Lint
+        run: pnpm run lint
+
+      - name: Run Prettier Check
+        run: pnpm run format:check
+
+      - name: Run Tests with Coverage
+        run: pnpm run test:coverage
+
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage/clover.xml
+          flags: unittests
+          name: codecov-umbrella
+          #token: ${{ secrets.CODECOV_TOKEN }}  Se for privado

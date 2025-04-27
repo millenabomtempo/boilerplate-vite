@@ -1,0 +1,11 @@
+import { getAxios } from '@shared/hooks/useAxios'
+import { I{{ properCase ModuleName }} } from '@shared/interfaces/{{ dashCase ModuleName }}'
+import { ENDPOINTS } from '@shared/services/endpoints'
+
+export const get{{ properCase ModuleName }} = async (): Promise<I{{ properCase ModuleName }}[]> => {
+  const api = getAxios()
+  
+  const response = await api.get(ENDPOINTS.home)
+  
+  return response.data
+};
