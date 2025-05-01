@@ -1,11 +1,12 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render } from '@testing-library/react'
-import { lazy } from 'react'
 import { describe, expect, it } from 'vitest'
 
-const {{ properCase ComponentName }} = lazy(() => import('./index'));
+import {{ properCase ComponentName }} from './index'
 
 const renderComponent = (queryClient: QueryClient) => {
+  const queryClient = new QueryClient()
+
   return render(
     <QueryClientProvider client={queryClient}>
       <{{ pascalCase ComponentName }} />
@@ -15,9 +16,7 @@ const renderComponent = (queryClient: QueryClient) => {
 
 describe('<{{ pascalCase ComponentName }}  />', () => {
   it('should render page', () => {
-    const queryClient = new QueryClient()
-
-    const component = renderComponent(queryClient)
+    const component = renderComponent()
 
     expect(component).toBeTruthy()
   })
