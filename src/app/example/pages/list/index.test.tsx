@@ -1,14 +1,15 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { lazy } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { Provider } from '@ui/components/provider'
 
-const List = lazy(() => import('./index'))
+import List from './index'
 
-const renderComponent = (queryClient: QueryClient) => {
+const renderComponent = () => {
+  const queryClient = new QueryClient()
+
   return render(
     <Provider>
       <QueryClientProvider client={queryClient}>
@@ -20,23 +21,18 @@ const renderComponent = (queryClient: QueryClient) => {
 
 describe('<List  />', () => {
   it('should render page', () => {
-    const queryClient = new QueryClient()
-
-    const component = renderComponent(queryClient)
+    const component = renderComponent()
 
     expect(component).toBeTruthy()
   })
 
   it('should render list of images after fetch', async () => {
-    const queryClient = new QueryClient()
+    renderComponent()
 
-    renderComponent(queryClient)
+    expect(await screen.findByTestId('text--title')).toBeInTheDocument()
 
-    await waitFor(() => {
-      expect(screen.getByTestId('text--title')).toBeInTheDocument()
-    })
+    const images = await screen.findAllByRole('img')
 
-    const images = screen.getAllByRole('img')
     expect(images.length).toBeGreaterThan(0)
   })
 
@@ -44,27 +40,18 @@ describe('<List  />', () => {
     const user = userEvent.setup()
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 
-    const queryClient = new QueryClient()
+    renderComponent()
 
-    renderComponent(queryClient)
-
-    await waitFor(() => {
-      expect(screen.getByTestId('text--title')).toBeInTheDocument()
-    })
+    expect(await screen.findByTestId('text--title')).toBeInTheDocument()
 
     await user.type(screen.getByTestId('input--name'), 'John Doe')
     await user.type(screen.getByTestId('input--age'), '20')
 
     await user.click(screen.getByTestId('button--submit'))
 
-    await waitFor(() => {
-      expect(logSpy).toHaveBeenCalledWith({
-        data: expect.objectContaining({
-          name: 'John Doe',
-          age: '20',
-        }),
-      })
-    })
+    const expected = { data: { name: 'John Doe', age: '20' } }
+
+    expect(logSpy).toHaveBeenCalledWith(expected)
 
     logSpy.mockRestore()
   })

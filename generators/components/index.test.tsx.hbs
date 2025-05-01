@@ -6,7 +6,9 @@ import { Provider } from '@ui/components/provider'
 
 import {{ pascalCase ComponentName }} from './index'
 
-const renderComponent = (queryClient: QueryClient) => {
+const renderComponent = () => {
+  const queryClient = new QueryClient()
+
   return render(
     <Provider>
       <QueryClientProvider client={queryClient}>
@@ -18,9 +20,7 @@ const renderComponent = (queryClient: QueryClient) => {
 
 describe('<{{ pascalCase ComponentName }}  />', () => {
   it('should render component', () => {
-    const queryClient = new QueryClient()
-
-    const component = renderComponent(queryClient)
+    const component = renderComponent()
 
     expect(component).toBeTruthy()
   })
