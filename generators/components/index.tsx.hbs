@@ -4,13 +4,17 @@
  *
  */
 
+import { Box } from '@chakra-ui/react'
+
+import { styles } from './styles'
+
 interface {{properCase ComponentName}}Props {} 
 
 const {{properCase ComponentName}} = (_props:{{properCase ComponentName}}Props) => { 
   return (
-    <div>
+    <Box {...styles.container}>
       <h1>{{properCase ComponentName}}</h1>
-    </div>
+    </Box>
   ) 
 } 
 

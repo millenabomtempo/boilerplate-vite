@@ -1,11 +1,14 @@
 import js from '@eslint/js'
 import pluginQuery from '@tanstack/eslint-plugin-query'
+import tsPlugin from '@typescript-eslint/eslint-plugin'
 import parser from '@typescript-eslint/parser'
 import { defineConfig } from 'eslint/config'
 import importPlugin from 'eslint-plugin-import'
 import pluginReact from 'eslint-plugin-react'
 import pluginReactHooks from 'eslint-plugin-react-hooks'
 import globals from 'globals'
+
+import noSharedUiImport from './eslint-rules/no-shared-ui-import.mjs'
 
 export default defineConfig([
   {
@@ -14,6 +17,12 @@ export default defineConfig([
       js,
       import: importPlugin,
       'react-hooks': pluginReactHooks,
+      '@typescript-eslint': tsPlugin,
+      'custom-rules': {
+        rules: {
+          'no-shared-ui-import': noSharedUiImport,
+        },
+      },
     },
     extends: ['js/recommended'],
     languageOptions: {
@@ -30,6 +39,7 @@ export default defineConfig([
             ['@app', './src/app'],
             ['@shared', './src/shared'],
             ['@mocks', './src/mocks'],
+            ['@ui', './src/shared/styles'],
             ['msw/browser', './node_modules/msw/browser'],
           ],
           extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -53,13 +63,17 @@ export default defineConfig([
 
       // Qualidade
       'no-console': ['error', { allow: ['warn', 'error'] }],
-      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      'no-unused-vars': 'off', // desativa a padrão
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_' },
+      ],
       'prefer-const': 'error',
       'no-async-promise-executor': 'error',
 
       // React
       'react/react-in-jsx-scope': 'off',
-      'react-hooks/exhaustive-deps': 'error', // Mantido, pois é crucial para o hook de dependências
+      'react-hooks/exhaustive-deps': 'error',
       'react/function-component-definition': [
         'error',
         {
@@ -90,6 +104,8 @@ export default defineConfig([
           warnOnUnassignedImports: true,
         },
       ],
+
+      'custom-rules/no-shared-ui-import': 'error',
     },
   },
 ])

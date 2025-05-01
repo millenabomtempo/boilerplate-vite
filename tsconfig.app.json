@@ -23,9 +23,10 @@
     "noUncheckedSideEffectImports": true,
 
     "paths": {
+      "@ui/*": ["./src/shared/styles/*"],
       "@app/*": ["./src/app/*"],
-      "@shared/*": ["./src/shared/*"],
-      "@mocks/*": ["./src/mocks/*"]
+      "@mocks/*": ["./src/mocks/*"],
+      "@shared/*": ["./src/shared/*"]
     }
   },
   "include": ["src/**/*"]

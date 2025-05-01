@@ -3,8 +3,8 @@
     "baseUrl": "src",
     "paths": {
       "@/*": ["*"],
+      "@ui/*": ["shared/styles/*"],
       "@shared/*": ["shared/*"],
-      "@components/*": ["shared/components/*"],
       "@mocks/*": ["mocks/*"]
     }
   },

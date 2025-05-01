@@ -99,7 +99,13 @@ export default function (plop) {
         path: '../src/app/{{dashCase ModuleName}}/components/{{dashCase ComponentName}}/index.test.tsx',
         templateFile: './components/index.test.tsx.hbs',
         abortOnFail: true
-      }
+      },
+      {
+        type: 'add',
+        path: '../src/app/{{dashCase ModuleName}}/components/{{dashCase ComponentName}}/styles.ts',
+        templateFile: './components/styles.ts.hbs',
+        abortOnFail: true
+      },
     ]
   })
 
@@ -138,7 +144,13 @@ export default function (plop) {
         path: '../src/app/{{dashCase ModuleName}}/pages/{{dashCase ComponentName}}/index.test.tsx',
         templateFile: './page/index.test.tsx.hbs',
         abortOnFail: true
-      }
+      },
+      {
+        type: 'add',
+        path: '../src/app/{{dashCase ModuleName}}/pages/{{dashCase ComponentName}}/styles.ts',
+        templateFile: './page/styles.ts.hbs',
+        abortOnFail: true
+      },
     ]
   })
 
@@ -165,5 +177,71 @@ export default function (plop) {
         abortOnFail: true
       }
     ]
+  })
+
+  plop.setGenerator('ComponentRecipe', {
+    description: 'Generate recipe for a component',
+    prompts: [
+      {
+        type: 'input',
+        name: 'RecipeName',
+        message: 'What should it be called?',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: '../src/shared/styles/recipes/{{camelCase RecipeName}}.ts',
+        templateFile: './styles/recipe.ts.hbs',
+        abortOnFail: true,
+      },
+      {
+        type: 'modify',
+        path: '../src/shared/styles/theme.ts',
+        pattern: /(\/\/ ADD RECIPE)/g,
+        template: '$1\n      {{camelCase RecipeName}}: {{camelCase RecipeName}}Recipe,',
+        abortOnFail: true,
+      },
+      {
+        type: 'modify',
+        path: '../src/shared/styles/theme.ts',
+        pattern: /(\/\/ ADD IMPORT)/g,
+        template: '$1\nimport { {{camelCase RecipeName}}Recipe } from \'./recipes/{{camelCase RecipeName}}\'',
+        abortOnFail: true,
+      },
+    ],
+  })
+
+  plop.setGenerator('ComponentSlotRecipe', {
+    description: 'Generate slot recipe for a component',
+    prompts: [
+      {
+        type: 'input',
+        name: 'RecipeName',
+        message: 'What should it be called?',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: '../src/shared/styles/recipes/{{camelCase RecipeName}}.ts',
+        templateFile: './styles/slotRecipe.ts.hbs',
+        abortOnFail: true,
+      },
+      {
+        type: 'modify',
+        path: '../src/shared/styles/theme.ts',
+        pattern: /(\/\/ ADD SLOT RECIPE)/g,
+        template: '$1\n      {{camelCase RecipeName}}: {{camelCase RecipeName}}SlotRecipe,',
+        abortOnFail: true,
+      },
+      {
+        type: 'modify',
+        path: '../src/shared/styles/theme.ts',
+        pattern: /(\/\/ ADD IMPORT)/g,
+        template: '$1\nimport { {{camelCase RecipeName}}SlotRecipe } from \'./recipes/{{camelCase RecipeName}}\'',
+        abortOnFail: true,
+      },
+    ],
   })
 }

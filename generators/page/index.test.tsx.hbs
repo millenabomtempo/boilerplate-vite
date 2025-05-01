@@ -3,13 +3,17 @@ import { render } from '@testing-library/react'
 import { lazy } from 'react'
 import { describe, expect, it } from 'vitest'
 
+import { Provider } from '@ui/components/provider'
+
 const {{ properCase ComponentName }} = lazy(() => import('./index'));
 
 const renderComponent = (queryClient: QueryClient) => {
   return render(
-    <QueryClientProvider client={queryClient}>
-      <{{ pascalCase ComponentName }} />
-    </QueryClientProvider>
+    <Provider>
+      <QueryClientProvider client={queryClient}>
+        <{{ pascalCase ComponentName }} />
+      </QueryClientProvider>
+    </Provider>,
   )
 }
 

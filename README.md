@@ -1,4 +1,4 @@
-# Boilerplate Vite + React + Typescript [![codecov](https://codecov.io/gh/SEU-USUARIO/SEU-REPO/branch/main/graph/badge.svg)](https://codecov.io/gh/SEU-USUARIO/SEU-REPO)
+# Boilerplate Vite + React + Typescript [![codecov](https://codecov.io/gh/millenabomtempo/boilerplate-vite/branch/main/graph/badge.svg)](https://codecov.io/gh/millenabomtempo/boilerplate-vite)
 
 Esse projeto é um boilerplate inicial utilizando:
 
@@ -9,6 +9,7 @@ Esse projeto é um boilerplate inicial utilizando:
 - React Hook Form
 - Zod
 - TanStack Query
+- Chakra UI
 - Mock Service Worker (MSW)
 - Vitest para testes
 - ESLint e Prettier para lint e formatação
@@ -44,9 +45,9 @@ pnpm prepare
 npx msw init ./public --save
 ```
 
-5. Criar arquivo `.env`.
+5. Crie o arquivo `.env`:
 
-```shell
+```bash
 cp .env.example .env
 ```
 
@@ -56,10 +57,103 @@ cp .env.example .env
 pnpm dev
 ```
 
-7. Rode o servidor de mock:
+7. Rode o servidor com mocks:
 
 ```bash
 pnpm mock
+```
+
+---
+
+## 📁 Estrutura de Pastas
+
+```
+src/
+├── app/
+│   └── nome-do-modulo/
+│       ├── components/
+│       └── pages/
+├── mocks/
+├── shared/
+│   ├── components/
+│   ├── interfaces/
+│   └── styles/
+│       ├── components/
+│       ├── recipes/
+│       └── theme.ts
+```
+
+---
+
+## ⚙️ Geração de Código com Plop
+
+Execute:
+
+```bash
+pnpm generate
+```
+
+### Opções Disponíveis
+
+#### 📦 `Module`
+
+Cria estrutura de um novo módulo com serviços, mocks e interfaces.
+
+- `src/app/<modulo>/service/index.ts`
+- `src/shared/interfaces/<modulo>.ts`
+- `src/mocks/handlers/<modulo>/index.ts`
+- `src/mocks/handlers/<modulo>/mock.ts`
+
+#### 🧱 `ModuleComponent`
+
+Cria um componente dentro de um módulo.
+
+- `src/app/<modulo>/components/<componente>/index.tsx`
+- `src/app/<modulo>/components/<componente>/index.test.tsx`
+- `src/app/<modulo>/components/<componente>/styles.ts`
+
+#### 📄 `ModulePage`
+
+Cria uma página dentro de um módulo.
+
+- `src/app/<modulo>/pages/<pagina>/index.tsx`
+- `src/app/<modulo>/pages/<pagina>/index.test.tsx`
+- `src/app/<modulo>/pages/<pagina>/styles.ts`
+
+#### 🔗 `SharedComponent`
+
+Cria um componente reutilizável compartilhado.
+
+- `src/shared/components/<componente>/index.tsx`
+- `src/shared/components/<componente>/index.test.tsx`
+
+#### 🎨 `ComponentRecipe`
+
+Cria uma recipe para estilização com Chakra.
+
+- `src/shared/styles/recipes/<recipe>.ts`
+- Atualiza automaticamente o `theme.ts`
+
+#### 🧩 `ComponentSlotRecipe`
+
+Igual ao anterior, mas para componentes com múltiplos slots (usando `slots` do Chakra UI).
+
+---
+
+## 💅 Chakra UI
+
+O projeto usa Chakra UI com **@chakra-ui/cli**, **Recipes** e **Slot Recipes** para estilos desacoplados e reaproveitáveis.
+
+### Criar um novo snippet (componente UI Chakra):
+
+```bash
+pnpm ui:snippet
+```
+
+### Gerar tipos automáticos do tema:
+
+```bash
+pnpm ui:typegen
 ```
 
 ---
@@ -70,6 +164,18 @@ Rodar todos os testes:
 
 ```bash
 pnpm test
+```
+
+Rodar com interface visual:
+
+```bash
+pnpm test:ui
+```
+
+Gerar cobertura de testes:
+
+```bash
+pnpm test:coverage
 ```
 
 ---
@@ -119,15 +225,18 @@ Você será guiado por perguntas interativas para escolher:
 - [React Hook Form](https://react-hook-form.com/)
 - [Zod](https://zod.dev/)
 - [TanStack Query (React Query)](https://tanstack.com/query/latest)
+- [Chakra UI](https://chakra-ui.com/)
 - [Mock Service Worker (MSW)](https://mswjs.io/)
 - [Vitest](https://vitest.dev/)
+- [Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 - [ESLint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
+- [Plop.js](https://plopjs.com/)
 - [Husky](https://typicode.github.io/husky/)
 - [Lint-staged](https://github.com/okonet/lint-staged)
 - [Commitizen](https://commitizen.github.io/cz-cli/)
 - [Commitlint](https://commitlint.js.org/)
-- [GitHub Actions](https://docs.github.com/en/actions) (CI/CD)
+- [GitHub Actions](https://docs.github.com/en/actions)
 
 ---
 
@@ -171,7 +280,7 @@ Certifique-se de que seu editor suporte `.editorconfig` ou instale a extensão n
 Exemplo:
 
 ```markdown
-![Build Status](https://github.com/millena-dev/boilerplate-vite/actions/workflows/ci.yml/badge.svg)
+![Build Status](https://github.com/SEU-USUARIO/SEU-REPO/actions/workflows/ci.yml/badge.svg)
 ```
 
 ---

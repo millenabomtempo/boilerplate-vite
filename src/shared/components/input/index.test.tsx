@@ -4,19 +4,19 @@ import { describe, expect, it } from 'vitest'
 
 import { Provider } from '@ui/components/provider'
 
-import Button from './index'
+import Input from './index'
 
 const renderComponent = (queryClient: QueryClient) => {
   return render(
     <Provider>
       <QueryClientProvider client={queryClient}>
-        <Button />
+        <Input />
       </QueryClientProvider>
     </Provider>,
   )
 }
 
-describe('<Button  />', () => {
+describe('<Input  />', () => {
   it('should render component', () => {
     const queryClient = new QueryClient()
 

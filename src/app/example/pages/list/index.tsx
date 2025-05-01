@@ -4,75 +4,47 @@
  *
  */
 
-import { zodResolver } from '@hookform/resolvers/zod'
+import { Box } from '@chakra-ui/react'
 import { useQuery } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import Form, { FormData } from '@app/example/components/form'
+import { getExample } from '@app/example/service'
 import { IExample } from '@shared/interfaces/example'
 
-import { getExample } from '../../service'
-
-const schema = z.object({
-  name: z.string().nonempty('Name is required'),
-  age: z.string(),
-})
-
-type FormData = z.infer<typeof schema>
+import { styles } from './styles'
 
 const ExampleList = () => {
-  const { isPending, isError, data, error } = useQuery<
-    IExample[],
-    AxiosError,
-    IExample[]
-  >({
+  const { isPending, data } = useQuery<IExample[], AxiosError, IExample[]>({
     queryKey: ['dogs'],
     queryFn: () => getExample(),
   })
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-  })
+  if (isPending) {
+    return <span>Loading...</span>
+  }
 
   const onSubmit = (data: FormData) => {
     // eslint-disable-next-line no-console
     console.log({ data })
   }
 
-  if (isPending) {
-    return <span>Loading...</span>
-  }
-
-  if (isError) {
-    return <span>Error: {error.message}</span>
-  }
-
   return (
-    <div>
-      <h1>Boilerplate Vite</h1>
+    <Box {...styles.container}>
+      <h1 data-testid="text--title">Boilerplate Vite</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="name">Name</label>
-          <input {...register('name')} />
-          {errors.name && <span>{errors.name.message}</span>}
-        </div>
-        <div>
-          <label htmlFor="age">Age</label>
-          <input {...register('age')} />
-          {errors.age && <span>{errors.age.message}</span>}
-        </div>
+      <Box maxW="50%" w="100%">
+        <Form onSubmit={onSubmit} />
 
-        <button type="submit">Submit</button>
-      </form>
-
-      {data?.map((item) => <p key={item?.id}>{item.url}</p>)}
-    </div>
+        <Box {...styles.content}>
+          {data?.map((item) => (
+            <Box key={item?.id} w="200px">
+              <img src={item.url}></img>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+    </Box>
   )
 }
 

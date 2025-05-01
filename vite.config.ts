@@ -10,16 +10,14 @@ import { configDefaults } from 'vitest/config'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
-  plugins: [
-    react(),
-    tsconfigPaths(), // Deixa o Vite entender o tsconfig paths sem precisar fazer nada manualmente
-  ],
+  plugins: [react(), tsconfigPaths()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
       '@app': path.resolve(__dirname, './src/app'),
       '@shared': path.resolve(__dirname, './src/shared'),
       '@mocks': path.resolve(__dirname, './src/mocks'),
+      '@ui': path.resolve(__dirname, './src/shared/styles'),
     },
   },
   server: {
@@ -47,6 +45,7 @@ export default defineConfig({
         'src/shared/services/*',
         'src/shared/types/*',
         'src/shared/utils/*',
+        'src/shared/styles/*',
       ],
     },
   },
