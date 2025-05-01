@@ -16,17 +16,13 @@ import { getExample } from '../../service'
 
 const schema = z.object({
   name: z.string().nonempty('Name is required'),
-  age: z.string(),
+  age: z.string().nonempty('Age is required'),
 })
 
 type FormData = z.infer<typeof schema>
 
 const ExampleList = () => {
-  const { isPending, isError, data, error } = useQuery<
-    IExample[],
-    AxiosError,
-    IExample[]
-  >({
+  const { isPending, data } = useQuery<IExample[], AxiosError, IExample[]>({
     queryKey: ['dogs'],
     queryFn: () => getExample(),
   })
@@ -48,27 +44,25 @@ const ExampleList = () => {
     return <span>Loading...</span>
   }
 
-  if (isError) {
-    return <span>Error: {error.message}</span>
-  }
-
   return (
     <div>
-      <h1>Boilerplate Vite</h1>
+      <h1 data-testid="text--title">Boilerplate Vite</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="name">Name</label>
-          <input {...register('name')} />
+          <input {...register('name')} data-testid="input--name" />
           {errors.name && <span>{errors.name.message}</span>}
         </div>
         <div>
           <label htmlFor="age">Age</label>
-          <input {...register('age')} />
+          <input {...register('age')} data-testid="input--age" />
           {errors.age && <span>{errors.age.message}</span>}
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit" data-testid="button--submit">
+          Submit
+        </button>
       </form>
 
       {data?.map((item) => <p key={item?.id}>{item.url}</p>)}

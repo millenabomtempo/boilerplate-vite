@@ -1,5 +1,6 @@
 import js from '@eslint/js'
 import pluginQuery from '@tanstack/eslint-plugin-query'
+import tsPlugin from '@typescript-eslint/eslint-plugin'
 import parser from '@typescript-eslint/parser'
 import { defineConfig } from 'eslint/config'
 import importPlugin from 'eslint-plugin-import'
@@ -14,6 +15,7 @@ export default defineConfig([
       js,
       import: importPlugin,
       'react-hooks': pluginReactHooks,
+      '@typescript-eslint': tsPlugin,
     },
     extends: ['js/recommended'],
     languageOptions: {
@@ -53,13 +55,17 @@ export default defineConfig([
 
       // Qualidade
       'no-console': ['error', { allow: ['warn', 'error'] }],
-      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_' },
+      ],
       'prefer-const': 'error',
       'no-async-promise-executor': 'error',
 
       // React
       'react/react-in-jsx-scope': 'off',
-      'react-hooks/exhaustive-deps': 'error', // Mantido, pois é crucial para o hook de dependências
+      'react-hooks/exhaustive-deps': 'error',
       'react/function-component-definition': [
         'error',
         {
